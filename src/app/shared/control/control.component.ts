@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, input, ViewEncapsulation } from '@angular/core';
+import { Component, ContentChild, ElementRef, HostListener, input, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'app-control',
@@ -15,10 +15,16 @@ import { Component, ElementRef, HostListener, input, ViewEncapsulation } from '@
   }
 })
 export class ControlComponent {
+  @ContentChild('input') inputElement?:ElementRef<HTMLInputElement|HTMLTextAreaElement>;
+  //like we have viewchild to get hold of the template elements
+  //similarly we have contentchild to get hold of the projected content elements
+
   constructor(private e:ElementRef){}
+  
   @HostListener('click') onClick(){
     console.log("CLICKED!!")
-    console.log(this.e);
+    
   }
+  
   title=input.required<string>()
 }
