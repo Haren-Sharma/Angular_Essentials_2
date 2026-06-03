@@ -1,7 +1,8 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, output, ViewChild } from '@angular/core';
 import { ButtonComponent } from "../../../shared/button/button.component";
 import { ControlComponent } from "../../../shared/control/control.component";
 import { FormsModule } from '@angular/forms';
+import { Ticket } from '../ticket.model';
 
 @Component({
   selector: 'app-new-ticket',
@@ -17,10 +18,12 @@ export class NewTicketComponent {
   //then angular will search for that variable in the template and assign it's value to the viewchild variable
   //in the argument we can also pass a Component or Directive class to query by type
 
-  onSubmit(title:HTMLInputElement,request:HTMLTextAreaElement){
-    console.log("Entered Title",title.value);
-    console.log("Entered Request",request.value);
+  add=output<{title:string,text:string}>()
+
+  onSubmit(title:string,request:string){
+    this.add.emit({title,text:request});
     this.form?.nativeElement.reset();
+
     //WHy nativeElement ?
     //Because ElementRef puts a wrapper on the returned value 
     //so to access the underline element we used nativeElement property
